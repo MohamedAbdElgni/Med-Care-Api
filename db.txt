@@ -1,0 +1,42 @@
+User Model:
+	Fields
+		id( Unique )
+		firstName
+		lastName
+		email
+		password
+		role(doctor, patient, admin)
+		phoneNumber
+		gender
+		dateOfBirth
+
+Appointment Model:
+	Fields
+		id( Unique )
+		doctorId
+		patientId
+		date( date and time of the appointment)
+		status (pending, confirmed, cancelled)
+
+Rating Model:
+
+	Fields
+		id( Unique )
+		userId
+		doctorId
+		rating
+		createdAt
+		comment
+Review Model:
+
+	Fields
+		id( Unique )
+		userId
+		doctorId
+		description
+		createdAt
+
+=============================
+1- patient model
+2- doctor model
+3- doc appointment model
