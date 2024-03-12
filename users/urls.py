@@ -11,7 +11,4 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('user/', user, name='user'),
     path('test/', test, name='test'),
-    #rating
-    path('ratings/', all_ratings, name='all-ratings'),  # New endpoint for all ratings
-    path('ratings/<int:doctor_id>/', doctor_ratings, name='doctor-ratings'),
-]
+    ]
