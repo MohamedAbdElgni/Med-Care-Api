@@ -3,11 +3,11 @@ POST http://127.0.0.1:8000/auth/register/
 Content-Type: application/json
 
 {
-    "username": "ahmed",
+    "username": "ahmhjed",
     "password": "123456",
     "first_name": "John",
     "last_name": "Doe",
-    "email": "ahmed@example.com",
+    "email": "ahmked@example.com",
     "is_patient": false,
     "is_doctor": true,
     "phone": "12345",
@@ -50,6 +50,8 @@ Content-Type: application/json
     "rating": 4,
     "comment": "Great experience with the doctor!"
 }
+
+
 ### get rating example
 PUT http://127.0.0.1:8000/ratings/ratings/1/
 Content-Type: application/json
