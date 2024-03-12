@@ -23,4 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', test_connection),
     path('auth/', include('users.urls')),
+    path('appointments/', include('appointments.urls')),
+    path('schedules/', include('appointments.urls')),
 ]

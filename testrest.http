@@ -38,3 +38,27 @@ Authorization: Token bef4cf04a7bad4b057b9e9fb8472c7a84d131de9
 POST http://127.0.0.1:8000/auth/logout/
 Content-Type: application/json
 Authorization: Token bef4cf04a7bad4b057b9e9fb8472c7a84d131de9
+
+
+#rate
+GET http://127.0.0.1:8000/ratings/ratings/
+
+POST http://127.0.0.1:8000/ratings/ratings/
+{
+    "doctor": 1,
+    "user": 1,
+    "rating": 4,
+    "comment": "Great experience with the doctor!"
+}
+GET  http://127.0.0.1:8000/ratings/ratings/1/
+
+PUT http://127.0.0.1:8000/ratings/ratings/1/
+
+{
+    "doctor":4,
+    "user": 1,
+    "rating": 5,
+    "comment": "update"
+}
+
+DELETE  http://127.0.0.1:8000/ratings/ratings/1/
