@@ -22,6 +22,5 @@ from .views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', test_connection),
-    path('api-auth/', include('rest_framework.urls')),
     path('auth/', include('users.urls')),
 ]

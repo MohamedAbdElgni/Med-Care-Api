@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from rest
+
 # Create your models here.
 
 #=============Notes================
@@ -22,6 +22,10 @@ class User(AbstractUser):
     address = models.CharField(max_length=100, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES ,default='M')
+    email = models.EmailField(unique=True)
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = []
+    
 
 
 
