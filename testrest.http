@@ -50,6 +50,8 @@ Content-Type: application/json
     "rating": 4,
     "comment": "Great experience with the doctor!"
 }
+
+
 ### get rating example
 PUT http://127.0.0.1:8000/ratings/ratings/1/
 Content-Type: application/json
