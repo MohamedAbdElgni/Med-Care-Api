@@ -31,10 +31,14 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/auth/test/
 Content-Type: application/json
-Authorization: Token 72657e039c6b307d54cafa450e6dc7af803cbcc7
+Authorization: Token 00ddb212f63be7783e8d55dc00e342e96417e53f
 
 
 ### logout example
 POST http://127.0.0.1:8000/auth/logout/
 Content-Type: application/json
 Authorization: Token 72657e039c6b307d54cafa450e6dc7af803cbcc7
+
+
+### get all doctors
+GET http://127.0.0.1:8000/auth/doctor/

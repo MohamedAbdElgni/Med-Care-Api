@@ -31,13 +31,18 @@ def register(request):
 
 @api_view(['POST'])
 def login_user(request):
-        user = get_object_or_404(User, username=request.data['username'])
-        if not user.check_password(request.data['password']):
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
-        token, created = Token.objects.get_or_create(user=user)
-        serializer = UserSerializer(user)
-        return Response({'token': token.key, 'user': serializer.data})
-        
+    user = get_object_or_404(User, username=request.data['username'])
+    if not user.check_password(request.data['password']):
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+    token, created = Token.objects.get_or_create(user=user)
+    serializer = UserSerializer(user)
+    # Check if the user is a doctor
+    if user.is_doctor:
+        doctor_profile = Doctor.objects.get(user=user)
+        doctor_serializer = DoctorSerializer(doctor_profile) 
+        return Response({'token': token.key, 'user': serializer.data, 'doctor_profile': doctor_serializer.data})
+    
+    return Response({'token': token.key, 'user': serializer.data})
     
 @api_view(['GET'])
 def user(request):
@@ -53,7 +58,7 @@ def test(request):
     to test authentication if user is logged in or not
     
     """
-    return Response({'message': f'Test view for {request.user.email}'})
+    return Response({'message': f'Test view for {dir(request.user)}'})
 
 
 
@@ -63,3 +68,11 @@ def test(request):
 def logout_user(request):
     request.auth.delete()
     return Response({'message': 'User logged out successfully'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_doctors(request):
+    doctors = Doctor.objects.all()
+    for doctor in doctors:
+        print(doctor)
+    serializer = DoctorSerializer(doctors, many=True)
+    return Response(serializer.data)

@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class DoctorSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Doctor
         fields = ['user', 'specialization', 'bio', 'degree']  
