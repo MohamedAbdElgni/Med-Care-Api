@@ -1,0 +1,40 @@
+### Register example
+POST http://127.0.0.1:8000/auth/register/
+Content-Type: application/json
+
+{
+    "username": "hassan",
+    "password": "123456",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "hassan@example.com",
+    "is_patient": false,
+    "is_doctor": true,
+    "phone": "12345",
+    "age": 35,
+    "dob": "1989-01-01",
+    "address": "123 Example St",
+    "city": "Exampleville",
+    "gender": "M"
+  }
+###login example
+
+POST http://127.0.0.1:8000/auth/login/
+Content-Type: application/json
+
+{
+    "username": "hassan",
+    "password": "123456"
+}
+### test example
+
+
+GET http://127.0.0.1:8000/auth/test/
+Content-Type: application/json
+Authorization: Token bef4cf04a7bad4b057b9e9fb8472c7a84d131de9
+
+
+### logout example
+POST http://127.0.0.1:8000/auth/logout/
+Content-Type: application/json
+Authorization: Token bef4cf04a7bad4b057b9e9fb8472c7a84d131de9
