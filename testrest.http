@@ -3,13 +3,13 @@ POST http://127.0.0.1:8000/auth/register/
 Content-Type: application/json
 
 {
-    "username": "ahmed",
+    "username": "ali",
     "password": "123456",
-    "first_name": "John",
-    "last_name": "Doe",
-    "email": "ahmed@example.com",
-    "is_patient": false,
-    "is_doctor": true,
+    "first_name": "ali",
+    "last_name": "mostafa",
+    "email": "ali@example.com",
+    "is_patient": true,
+    "is_doctor": false,
     "phone": "12345",
     "age": 35,
     "dob": "1989-01-01",
@@ -63,6 +63,110 @@ Content-Type: application/json
 }
 ### delete rating example
 DELETE http://127.0.0.1:8000/ratings/ratings/1/
+
+
+### get all patients
+GET http://127.0.0.1:8000/auth/patients/
+
+
+### get all doctors
+GET http://127.0.0.1:8000/auth/doctors/
+
+### get patient by id
+GET http://127.0.0.1:8000/auth/users/1/
+
+### get doctor by id
+GET http://127.0.0.1:8000/auth/doctors/2/
+
+### Delete doctor by id
+DELETE http://127.0.0.1:8000/auth/doctors/2/
+
+### Delete patient by id
+DELETE http://127.0.0.1:8000/auth/users/1/
+
+### Update patient by id
+PUT http://127.0.0.1:8000/auth/users/4/
+Content-Type: application/json
+
+{
+    "username": "ali",
+    "email": "ali@example.com",
+    "is_patient": true,
+    "is_doctor": false,
+    "phone": "12345",
+    "age": 35,
+    "dob": "1989-01-01",
+    "address": "123 Example St",
+    "city": "Exampleville",
+    "gender": "M",
+    "first_name": "ali",
+    "last_name": "mostafa"
+}
+
+##################################################
+### add schedule
+POST http://127.0.0.1:8000/schedules/all_sch/
+Content-Type: application/json
+
+{
+            "doctor":3,
+            "day":"friday",
+            "start_time":"10:00",
+            "end_time":"12:00",
+            "is_active":false
+}
+
+### get all schedules
+GET  http://127.0.0.1:8000/schedules/all_sch/
+
+
+### Update schedule by id
+PUT http://127.0.0.1:8000/schedules/schedule/4/
+Content-Type: application/json
+
+{
+            "doctor":3,
+            "day":"sunday",
+            "start_time":"10:00",
+            "end_time":"12:00",
+            "is_active":false
+}
+
+### Delete/ delete schedule by id
+GET http://127.0.0.1:8000/schedules/schedule/1/
+
+#############################################
+### add appointment
+POST http://127.0.0.1:8000/schedules/all_app/
+Content-Type: application/json
+
+{
+    "schedule":1,
+    "user":2,
+    "create_at":"",
+    "is_accepted":false
+}
+
+
+### get all appointment
+GET  http://127.0.0.1:8000/schedules/all_app/
+
+
+### Update appointment by id
+PUT http://127.0.0.1:8000/schedules/appointment/1/
+Content-Type: application/json
+
+{
+    
+    "schedule": 1,
+    "user": 2,
+    "create_at": "2024-03-12T23:33:52.655234Z",
+    "is_accepted": true
+}
+
+### Delete/ delete appointment by id
+DELETE  http://127.0.0.1:8000/schedules/appointment/1/
+
 
 
 

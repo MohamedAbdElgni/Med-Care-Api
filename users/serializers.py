@@ -6,13 +6,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'email', 'is_patient', 'is_doctor', 'phone', 'age', 'dob', 'address', 'city', 'gender', 'password','first_name','last_name']
-        extra_kwargs = {
-            'password': {'write_only': True},
-            'username': {'write_only': False, 'required': False},
-            'email': {'write_only': False, 'required': False},
-            # 'is_patient': {'read_only': True}, 
-            # 'is_doctor': {'read_only': True}  
-            }
     def create(self, validated_data):
         password = validated_data.pop('password')
         user = User(**validated_data)
@@ -29,7 +22,6 @@ class UserSerializer(serializers.ModelSerializer):
         instance.address = validated_data.get('address', instance.address)
         instance.city = validated_data.get('city', instance.city)
         instance.gender = validated_data.get('gender', instance.gender)
-        instance.password = validated_data.get('password', instance.password)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.save()

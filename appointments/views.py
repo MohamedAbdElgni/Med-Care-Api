@@ -47,7 +47,9 @@ def schedule(request, s_id):
 @api_view(['GET', 'POST'])
 def all_appointments(request):
     if request.method == 'GET':
-        appointments = Schedule.objects.all()
+        
+        appointments = Appointment.objects.all()
+        
         if appointments:
             serializer = AppointmentSerializer(appointments, many=True)
             return Response(serializer.data)
@@ -63,7 +65,7 @@ def all_appointments(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def appointment(request, a_id):
-    appointments = get_object_or_404(Schedule, pk=a_id)
+    appointments = get_object_or_404(Appointment, pk=a_id)
     if request.method == 'GET':
         serializer = AppointmentSerializer(appointments)
         return Response(serializer.data)
