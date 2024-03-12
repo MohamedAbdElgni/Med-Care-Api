@@ -22,3 +22,9 @@ class DoctorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Doctor.objects.create(**validated_data)
+        
+ #rating       
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ['id', 'doctor', 'user', 'rating', 'comment', 'created_at']       
