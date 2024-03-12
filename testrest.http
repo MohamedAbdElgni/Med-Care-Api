@@ -31,10 +31,10 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/auth/test/
 Content-Type: application/json
-Authorization: Token bef4cf04a7bad4b057b9e9fb8472c7a84d131de9
+Authorization: Token 43b1011de1035cac3f4c915c442b3727b4cea29f
 
 
 ### logout example
 POST http://127.0.0.1:8000/auth/logout/
 Content-Type: application/json
-Authorization: Token bef4cf04a7bad4b057b9e9fb8472c7a84d131de9
+Authorization: Token 43b1011de1035cac3f4c915c442b3727b4cea29f
