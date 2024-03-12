@@ -3,11 +3,11 @@ POST http://127.0.0.1:8000/auth/register/
 Content-Type: application/json
 
 {
-    "username": "hassan",
+    "username": "ahmed",
     "password": "123456",
     "first_name": "John",
     "last_name": "Doe",
-    "email": "hassan@example.com",
+    "email": "ahmed@example.com",
     "is_patient": false,
     "is_doctor": true,
     "phone": "12345",
@@ -31,34 +31,38 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/auth/test/
 Content-Type: application/json
-Authorization: Token bef4cf04a7bad4b057b9e9fb8472c7a84d131de9
+Authorization: Token 3ede88cc1730ff4c59c18a0cfe0d3d07ef457fd9
 
 
 ### logout example
 POST http://127.0.0.1:8000/auth/logout/
 Content-Type: application/json
-Authorization: Token bef4cf04a7bad4b057b9e9fb8472c7a84d131de9
+Authorization: Token 3ede88cc1730ff4c59c18a0cfe0d3d07ef457fd9
 
 
-#rate
-GET http://127.0.0.1:8000/ratings/ratings/
-
+### rating example
 POST http://127.0.0.1:8000/ratings/ratings/
+Content-Type: application/json
+
 {
-    "doctor": 1,
+    "doctor": 2,
     "user": 1,
     "rating": 4,
     "comment": "Great experience with the doctor!"
 }
-GET  http://127.0.0.1:8000/ratings/ratings/1/
-
+### get rating example
 PUT http://127.0.0.1:8000/ratings/ratings/1/
+Content-Type: application/json
 
 {
-    "doctor":4,
+    "doctor": 2,
     "user": 1,
-    "rating": 5,
-    "comment": "update"
+    "rating": 4,
+    "comment": "Great expe454rience with the doctor!",
+    "created_at": "2024-03-12T22:47:52.391623Z"
 }
+### delete rating example
+DELETE http://127.0.0.1:8000/ratings/ratings/1/
 
-DELETE  http://127.0.0.1:8000/ratings/ratings/1/
+
+

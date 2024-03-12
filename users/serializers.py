@@ -10,8 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
             'username': {'write_only': False, 'required': False},
             'email': {'write_only': False, 'required': False},
-            'is_patient': {'read_only': True}, 
-            'is_doctor': {'read_only': True}  
+            # 'is_patient': {'read_only': True}, 
+            # 'is_doctor': {'read_only': True}  
             }
     def create(self, validated_data):
         password = validated_data.pop('password')
