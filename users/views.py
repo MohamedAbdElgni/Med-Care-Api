@@ -63,3 +63,57 @@ def test(request):
 def logout_user(request):
     request.auth.delete()
     return Response({'message': 'User logged out successfully'}, status=status.HTTP_200_OK)
+    
+#rating  
+@api_view(['GET'])
+def all_ratings(request):
+    if request.method == 'GET':
+        ratings = Rating.objects.all()
+        if not ratings:  # Check if the queryset is empty
+            return Response({'message': 'No ratings found'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            serializer = RatingSerializer(ratings, many=True)
+            return Response(serializer.data)
+        
+@api_view(['POST', 'PUT', 'DELETE'])
+def rate_doctor(request):
+    if request.method == 'POST':
+        serializer = RatingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)  
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'PUT':
+        rating_id = request.data.get('id')
+        rating = get_object_or_404(Rating, id=rating_id)
+        serializer = RatingSerializer(rating, data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response({'message': 'Rating updated successfully'}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        rating_id = request.data.get('id')
+        rating = get_object_or_404(Rating, id=rating_id)
+        rating.delete()
+        return Response({'message': 'Rating deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+    elif request.method == 'GET':
+        # Check if there are any ratings
+        if Rating.objects.exists():
+            return Response({'message': 'No ratings found'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            # Handle the GET request as needed
+            return Response({'message': 'No ratings found, '}, status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(['GET'])
+def doctor_ratings(request, doctor_id):
+    if request.method == 'GET':
+        doctor = get_object_or_404(Doctor, id=doctor_id)
+        ratings = Rating.objects.filter(doctor=doctor)
+        if not ratings:
+            return Response({'message': 'No ratings found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            serializer = RatingSerializer(ratings, many=True)
+            return Response(serializer.data)
