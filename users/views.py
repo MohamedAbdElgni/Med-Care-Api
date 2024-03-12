@@ -82,21 +82,26 @@ def all_ratings(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         
+        
 @api_view(['GET', 'PUT', 'DELETE'])
 def doctor_ratings(request, doctor_id):
-    doctor = get_object_or_404(Doctor, id=doctor_id)
+    try:
+        user = User.objects.get(id=doctor_id, is_doctor=True)
+        doctor = Doctor.objects.get(user=user)
+    except User.DoesNotExist:
+        return Response({'message': 'Doctor not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Doctor.DoesNotExist:
+        return Response({'message': 'Doctor not found'}, status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET':
         ratings = Rating.objects.filter(doctor=doctor)
         if not ratings:
             return Response({'message': 'No ratings found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            serializer = RatingSerializer(ratings, many=True)
-            return Response(serializer.data)
+        serializer = RatingSerializer(ratings, many=True)
+        return Response(serializer.data)
 
-    
     elif request.method == 'PUT':
-        rating_id = request.data.get('id')
+        rating_id = doctor_id
         rating = get_object_or_404(Rating, id=rating_id)
         serializer = RatingSerializer(rating, data=request.data)
         if serializer.is_valid():
@@ -105,7 +110,7 @@ def doctor_ratings(request, doctor_id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'DELETE':
-        rating_id = request.data.get('id')
+        rating_id = doctor_id
         rating = get_object_or_404(Rating, id=rating_id)
         rating.delete()
         return Response({'message': 'Rating deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
