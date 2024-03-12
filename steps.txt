@@ -46,18 +46,36 @@ patient model
 --------------------schedule-------------------
 ===============================================
 - doctor(fk)
-- date
+- day
 - start time
 - end time
 - is_active
+a|1|saturday|10:00|12:00|True
+b|1|sunday|10:00|12:00|True
+c|1|monday|10:00|12:00|True
 ===============================================
 --------------------appointment----------------
 ===============================================
 - schedule(fk)
 - patient(fk)
 - created_at
-- status(rejected-defult, accepted)
+- accepted
+5|b|5|2021-10-10 10:00|false
 ===============================================
 --------------------rating---------------------
 ===============================================
 
+
+
+
+========================================================
+1- update profile
+2- view profile
+3- view all doctors
+4- delete profile
+5- login
+6- logout
+7- register
+========================================================
+1- crud schedule
+2- crud appointments

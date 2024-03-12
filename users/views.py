@@ -1,17 +1,17 @@
 from django.shortcuts import render
-
-
-
-
-
-
-# simple end point to return a string for rest api framework
-
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from .models import *
+from .serializers import *
 
-@api_view(['GET'])
-def test_connection(request):
-    return Response("congratulations, server is working!", status=200)
 
+
+@api_view(['POST'])
+def register(request):
+    user_serializer = UserSerializer(data=request.data)
+    if user_serializer.is_valid():
+        user_serializer.save()
+        if not user_serializer.instance.is_patient:
+            Doctor.objects.create(user=user_serializer.instance)
+        return Response(user_serializer.data, status=201)
+    return Response(user_serializer.errors, status=400)
