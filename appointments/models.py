@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import *
-
+from doctors.models import *
 
 # Create your models here.
 class Schedule(models.Model):

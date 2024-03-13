@@ -3,11 +3,11 @@ POST http://127.0.0.1:8000/auth/register/
 Content-Type: application/json
 
 {
-    "username": "ali2222020",
+    "username": "ali",
     "password": "123456",
-    "first_name": "ali2222020",
+    "first_name": "ali",
     "last_name": "mostafa",
-    "email": "ali2222020@example.com",
+    "email": "ali@example.com",
     "is_patient": false,
     "is_doctor": true,
     "phone": "12345",
@@ -72,16 +72,16 @@ GET http://127.0.0.1:8000/auth/patients/
 
 
 ### get all doctors
-GET http://127.0.0.1:8000/auth/doctors/
+GET http://127.0.0.1:8000/doctors/doctors/
 
 ### get patient by id
 GET http://127.0.0.1:8000/auth/users/10/
 
 ### get doctor by id
-GET http://127.0.0.1:8000/auth/doctors/2/
+GET http://127.0.0.1:8000/doctors/doctor/1/
 
 ### Delete doctor by id
-DELETE http://127.0.0.1:8000/auth/doctors/2/
+DELETE http://127.0.0.1:8000/doctors/doctor/1/
 
 ### Delete patient by id
 DELETE http://127.0.0.1:8000/auth/users/1/
@@ -99,12 +99,12 @@ Content-Type: application/json
 }
 
 ### Update doctor profile by id
-PUT http://127.0.0.1:8000/auth/doctors/3/
+PUT http://127.0.0.1:8000/doctors/doctor/1/
 Content-Type: application/json
 
 {
-    "specialization": null,
-    "bio": "sadsad",
+    "specialization": "Cardiology",
+    "bio": "I has a master degree in cardiology",
     "degree": null
 }
 
