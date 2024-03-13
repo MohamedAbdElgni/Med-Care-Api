@@ -3,11 +3,11 @@ POST http://127.0.0.1:8000/auth/register/
 Content-Type: application/json
 
 {
-    "username": "ali22",
+    "username": "ali2222020",
     "password": "123456",
-    "first_name": "ali",
+    "first_name": "ali2222020",
     "last_name": "mostafa",
-    "email": "ali22@example.com",
+    "email": "ali2222020@example.com",
     "is_patient": false,
     "is_doctor": true,
     "phone": "12345",
@@ -23,7 +23,7 @@ POST http://127.0.0.1:8000/auth/login/
 Content-Type: application/json
 
 {
-    "username": "hassan",
+    "username": "ali55",
     "password": "123456"
 }
 ### test example
@@ -31,7 +31,7 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/auth/test/
 Content-Type: application/json
-Authorization: Token 3ede88cc1730ff4c59c18a0cfe0d3d07ef457fd9
+Authorization: Token b64b85c8023e683422da75bd4884f968c3f78204
 
 
 ### logout example
@@ -75,7 +75,7 @@ GET http://127.0.0.1:8000/auth/patients/
 GET http://127.0.0.1:8000/auth/doctors/
 
 ### get patient by id
-GET http://127.0.0.1:8000/auth/users/1/
+GET http://127.0.0.1:8000/auth/users/10/
 
 ### get doctor by id
 GET http://127.0.0.1:8000/auth/doctors/2/
@@ -87,21 +87,14 @@ DELETE http://127.0.0.1:8000/auth/doctors/2/
 DELETE http://127.0.0.1:8000/auth/users/1/
 
 ### Update patient by id
-PUT http://127.0.0.1:8000/auth/users/4/
+PUT http://127.0.0.1:8000/auth/users/10/
 Content-Type: application/json
 
 {
-    "username": "ali",
-    "email": "ali@example.com",
-    "is_patient": true,
-    "is_doctor": false,
-    "phone": "12345",
-    "age": 35,
-    "dob": "1989-01-01",
-    "address": "123 Example St",
-    "city": "Exampleville",
-    "gender": "M",
-    "first_name": "ali",
+    "username": "ali2020",
+    "first_name": "ali22020",
+    "last_name": "mostafa",
+    "email": "aliss2ss@example.com",
     "last_name": "mostafa"
 }
 

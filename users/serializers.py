@@ -5,27 +5,12 @@ from .models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email', 'is_patient', 'is_doctor', 'phone', 'age', 'dob', 'address', 'city', 'gender', 'password','first_name','last_name']
-    def create(self, validated_data):
-        password = validated_data.pop('password')
-        user = User(**validated_data)
-        if password:
-            user.set_password(password)
-        user.save()
-        return user
+        fields = '__all__'
+        extra_kwargs = {'password': {'write_only': True}}
     
-    def update(self, instance, validated_data):
-        instance.email = validated_data.get('email', instance.email)
-        instance.phone = validated_data.get('phone', instance.phone)
-        instance.age = validated_data.get('age', instance.age)
-        instance.dob = validated_data.get('dob', instance.dob)
-        instance.address = validated_data.get('address', instance.address)
-        instance.city = validated_data.get('city', instance.city)
-        instance.gender = validated_data.get('gender', instance.gender)
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.save()
-        return instance
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
 
     def get_by_id(self, user_id):
         user = User.objects.get(id=user_id)
@@ -59,3 +44,23 @@ class DoctorSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'age', 'dob', 'address']
+        extra_kwargs = {'first_name': {'required': True}, 'last_name': {'required': True}}
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.phone = validated_data.get('phone', instance.phone)
+        instance.age = validated_data.get('age', instance.age)
+        instance.dob = validated_data.get('dob', instance.dob)
+        instance.address = validated_data.get('address', instance.address)
+        instance.save()
+        return instance
+    
+
