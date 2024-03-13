@@ -194,3 +194,6 @@ Content-Type: application/json
 }
 ### delete rating example
 DELETE http://127.0.0.1:8000/ratings/ratings/3/
+
+### get rating by doctor
+GET http://127.0.0.1:8000/ratings/ratings/doctor/5/
