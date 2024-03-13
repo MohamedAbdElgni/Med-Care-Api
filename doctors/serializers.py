@@ -7,7 +7,7 @@ class DoctorSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
     class Meta:
         model = Doctor
-        fields = ['user', 'specialization', 'bio', 'degree']  
+        fields = '__all__' 
     def create(self, validated_data):
         return Doctor.objects.create(**validated_data)  
     
@@ -23,6 +23,8 @@ class DoctorSerializer(serializers.ModelSerializer):
         instance.specialization = validated_data.get('specialization', instance.specialization)
         instance.bio = validated_data.get('bio', instance.bio)
         instance.degree = validated_data.get('degree', instance.degree)
+        instance.area = validated_data.get('area', instance.area)
+        instance.fees = validated_data.get('fees', instance.fees)
         instance.save()
         return instance
     

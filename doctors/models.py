@@ -8,6 +8,8 @@ class Doctor(models.Model):
     bio = models.TextField(blank=True, null=True)    
     degree = models.CharField(max_length=100, blank=True, null=True)
     #experience = models.IntegerField(blank=True, null=True)
+    area = models.CharField(max_length=100, blank=True, null=True)
+    fees = models.IntegerField(blank=True, null=True)
     
     def __str__(self):
         return self.user.username
