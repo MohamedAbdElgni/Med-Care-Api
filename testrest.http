@@ -3,13 +3,13 @@ POST http://127.0.0.1:8000/auth/register/
 Content-Type: application/json
 
 {
-    "username": "ali",
+    "username": "ali22",
     "password": "123456",
     "first_name": "ali",
     "last_name": "mostafa",
-    "email": "ali@example.com",
-    "is_patient": true,
-    "is_doctor": false,
+    "email": "ali22@example.com",
+    "is_patient": false,
+    "is_doctor": true,
     "phone": "12345",
     "age": 35,
     "dob": "1989-01-01",
@@ -170,5 +170,27 @@ Content-Type: application/json
 DELETE  http://127.0.0.1:8000/schedules/appointment/1/
 
 
+################################33
+### rating example
+POST http://127.0.0.1:8000/ratings/ratings/
+Content-Type: application/json
 
+{
+    "doctor": 5,
+    "user": 6,
+    "rating": 4,
+    "comment": "Great experience with the doctor!"
+}
+### get rating example
+PUT http://127.0.0.1:8000/ratings/ratings/3/
+Content-Type: application/json
 
+{
+    "doctor": 5,
+    "user": 6,
+    "rating": 5,
+    "comment": "Great expe454rience with the doctor!",
+    "created_at": "2024-03-12T22:47:52.391623Z"
+}
+### delete rating example
+DELETE http://127.0.0.1:8000/ratings/ratings/3/
