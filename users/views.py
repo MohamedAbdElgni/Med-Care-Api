@@ -61,31 +61,29 @@ def logout_user(request):
     return Response({'message': 'User logged out successfully'}, status=status.HTTP_200_OK)
     
         
-# Patients --------------------------------------------------->    
-@api_view(['GET'])
-def get_patients(request):
-    if request.method == 'GET':
-        patients = User.objects.filter(is_patient=True, is_doctor=False)
-        serializer = UserSerializer(patients, many=True)
-        return Response(serializer.data)
-    return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def user_details(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    
+@api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_user(request, id):
+    user = get_object_or_404(User, id=id)
     if request.method == 'GET':
         serializer = UserSerializer(user)
         return Response(serializer.data)
-    
     elif request.method == 'PUT':
-        user = get_object_or_404(User, id=user_id)
-        #update the user
-        serializer = UpdateUserSerializer(user, data=request.data)
+        serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'data': serializer.data})
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         user.delete()
         return Response({'message': 'User deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+    elif request.method == 'PATCH':
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+

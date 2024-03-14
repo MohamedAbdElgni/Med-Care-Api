@@ -23,7 +23,7 @@ POST http://127.0.0.1:8000/auth/login/
 Content-Type: application/json
 
 {
-    "username": "ali55",
+    "username": "ali200",
     "password": "123456"
 }
 ### test example
@@ -31,13 +31,32 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/auth/test/
 Content-Type: application/json
-Authorization: Token b64b85c8023e683422da75bd4884f968c3f78204
+#Authorization: Token 74f33cc443b42047a7ae8bd42a462672ac28533c
 
 
 ### logout example
 POST http://127.0.0.1:8000/auth/logout/
 Content-Type: application/json
 Authorization: Token 3ede88cc1730ff4c59c18a0cfe0d3d07ef457fd9
+
+
+### get user by id
+GET http://127.0.0.1:8000/auth/users/2/
+Authorization: Token 74f33cc443b42047a7ae8bd42a462672ac28533c
+
+
+
+### update user by id
+PATCH http://127.0.0.1:8000/auth/users/2/
+Content-Type: application/json
+Authorization: Token 74f33cc443b42047a7ae8bd42a462672ac28533c
+
+{
+    "username": "ali200",
+    "first_name": "ali22020",
+    "last_name": "mostafa"
+    
+}
 
 
 ### rating example
