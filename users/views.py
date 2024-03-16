@@ -13,6 +13,9 @@ from doctors.models import *
 @api_view(['POST'])
 def register(request):
     if request.method == 'POST':
+        print("-"*50)
+        print((request.data))
+        print("-"*50)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -31,7 +34,7 @@ def register(request):
 
 @api_view(['POST'])
 def login_user(request):
-        user = get_object_or_404(User, username=request.data['username'])
+        user = get_object_or_404(User, email=request.data['email'])
         if not user.check_password(request.data['password']):
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
         token, created = Token.objects.get_or_create(user=user)
@@ -40,8 +43,8 @@ def login_user(request):
     
 
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def test(request):
     """
     Test view
@@ -49,7 +52,8 @@ def test(request):
     
     """
     print(request.user)
-    return Response({'message': f'Test view for {request.user.email}'})
+    print(request.auth)
+    return Response({'message': f'Test view for {request.user.username}'})
 
 
 

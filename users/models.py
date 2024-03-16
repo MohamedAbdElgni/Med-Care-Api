@@ -15,7 +15,7 @@ class User(AbstractUser):
     )
     is_patient = models.BooleanField(default=False)
     is_doctor = models.BooleanField(default=False)
-    phone = models.CharField(max_length=5, blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
     # yousef 3ayz yeshelha
     age = models.IntegerField(blank=True, null=True)
     dob = models.DateField(blank=True, null=True)

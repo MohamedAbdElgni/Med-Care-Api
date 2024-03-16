@@ -3,14 +3,14 @@ POST http://127.0.0.1:8000/auth/register/
 Content-Type: application/json
 
 {
-    "username": "al2i",
+    "username": "ahmed2222",
     "password": "123456",
     "first_name": "ali",
     "last_name": "mostafa",
-    "email": "al2i@example.com",
-    "is_patient": false,
-    "is_doctor": true,
-    "phone": "12345",
+    "email": "ahmed2222@example.com",
+    "is_patient": true,
+    "is_doctor": false,
+    "phone": "01098557840",
     "age": 35,
     "dob": "1989-01-01",
     "address": "123 Example St",
@@ -23,7 +23,7 @@ POST http://127.0.0.1:8000/auth/login/
 Content-Type: application/json
 
 {
-    "username": "ali200",
+    "email": "ahmed2222@example.com",
     "password": "123456"
 }
 ### test example
@@ -31,7 +31,6 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/auth/test/
 Content-Type: application/json
-#Authorization: Token 74f33cc443b42047a7ae8bd42a462672ac28533c
 
 
 ### logout example
