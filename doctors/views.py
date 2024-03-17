@@ -7,13 +7,18 @@ from .serializers import *
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from .pagination import CustomPagination
+
 
 @api_view(['GET'])
 def get_doctors(request):
     if request.method == 'GET':
-        doctors = Doctor.objects.all()
-        serializer = DoctorSerializer(doctors, many=True)
-        return Response(serializer.data)
+        # doctors = Doctor.objects.all()
+        queryset = Doctor.objects.all().order_by('user__id')
+        paginator = CustomPagination()
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = DoctorSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
     return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
