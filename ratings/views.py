@@ -23,9 +23,13 @@ def all_ratings(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE','POST'])
 def rating_detail(request, rating_id):
-    rating = get_object_or_404(Rating, pk=rating_id)
+    try:
+        rating = get_object_or_404(Rating, id=rating_id)
+    except Rating.DoesNotExist:
+        return Response({'error': 'Rating not found'}, status=status.HTTP_404_NOT_FOUND)
+    
     
     if request.method == 'GET':
         serializer = RatingSerializer(rating)
@@ -45,24 +49,14 @@ def rating_detail(request, rating_id):
         
 @api_view(['GET'])
 def doctor_ratings(request, doctor_id):
-    try:
-        # Retrieve the user with the specified ID
-        user = User.objects.get(id=doctor_id)
-        
-        # Check if the user is a doctor
-        if not user.is_doctor:
-            return Response({'message': 'The specified user is not a doctor'}, status=status.HTTP_404_NOT_FOUND)
-        
-        # Retrieve all ratings for the specified doctor
-        ratings = Rating.objects.filter(doctor_id=doctor_id) 
-        
-        if not ratings.exists():
-            return Response({'message': 'No ratings found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
-        
-        if request.method == 'GET':
-            serializer = RatingSerializer(ratings, many=True)
-            return Response(serializer.data)
-    except User.DoesNotExist:
-        return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-
+    """
+    Get all ratings for a specific doctor
+    with patient info in each rating
+    """
+    ratings = Rating.objects.filter(doctor=doctor_id)
+    if not ratings:
+        return Response({'message': 'No ratings found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        serializer = DoctorRatings(ratings, many=True)
+        return Response(serializer.data)
+    
