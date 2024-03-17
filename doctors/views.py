@@ -9,6 +9,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 @api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_doctors(request):
     if request.method == 'GET':
         doctors = Doctor.objects.all()

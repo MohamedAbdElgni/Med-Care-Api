@@ -75,7 +75,7 @@ def get_user(request, id):
         serializer = UserSerializer(user)
         return Response(serializer.data)
     elif request.method == 'PUT':
-        serializer = UserSerializer(user, data=request.data)
+        serializer = UserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

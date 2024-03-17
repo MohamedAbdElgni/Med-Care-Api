@@ -51,9 +51,12 @@ Content-Type: application/json
 Authorization: Token 74f33cc443b42047a7ae8bd42a462672ac28533c
 
 {
-    "username": "ali200",
+    "username": "ali5000",
     "first_name": "ali22020",
-    "last_name": "mostafa"
+    "last_name": "mostafa",
+    "age":55,
+    "phone": "01098557840",
+    "email": "al2i@example.com"
     
 }
 
@@ -61,24 +64,29 @@ Authorization: Token 74f33cc443b42047a7ae8bd42a462672ac28533c
 ### rating example
 POST http://127.0.0.1:8000/ratings/ratings/
 Content-Type: application/json
+Authorization: Token 0f3e81bb7b4a4ff91f59b0e3fc9841877dd79204
 
 {
+    "user": 6,
     "doctor": 2,
-    "user": 1,
     "rating": 4,
-    "comment": "Great experience with the doctor!"
+    "comment": "Great 11experience with the doctor!"
 }
 
 
-### get rating example
-PUT http://127.0.0.1:8000/ratings/ratings/1/
+### get rate by id
+GET http://127.0.0.1:8000/ratings/ratings/7/
+Content-Type: application/json
+
+### update rating example
+PUT http://127.0.0.1:8000/ratings/ratings/7/
 Content-Type: application/json
 
 {
     "doctor": 2,
     "user": 1,
     "rating": 4,
-    "comment": "Great expe454rience with the doctor!",
+    "comment": "Great xxxexpe45sdasd4rience with the doctor!",
     "created_at": "2024-03-12T22:47:52.391623Z"
 }
 ### delete rating example
@@ -195,28 +203,30 @@ DELETE  http://127.0.0.1:8000/schedules/appointment/1/
 
 ################################33
 ### rating example
-POST http://127.0.0.1:8000/ratings/ratings/
+POST http://127.0.0.1:8000/ratings/
 Content-Type: application/json
 
 {
-    "doctor": 5,
+    "doctor": 16,
     "user": 6,
     "rating": 4,
     "comment": "Great experience with the doctor!"
 }
-### get rating example
-PUT http://127.0.0.1:8000/ratings/ratings/3/
+### update rating example
+PUT http://127.0.0.1:8000/ratings/2/
 Content-Type: application/json
 
 {
-    "doctor": 5,
+    "doctor": 3,
     "user": 6,
     "rating": 5,
-    "comment": "Great expe454rience with the doctor!",
+    "comment": "Greasst expe454rience with the doctor!",
     "created_at": "2024-03-12T22:47:52.391623Z"
 }
 ### delete rating example
-DELETE http://127.0.0.1:8000/ratings/ratings/3/
+DELETE http://127.0.0.1:8000/ratings/11/
 
-### get rating by doctor
-GET http://127.0.0.1:8000/ratings/ratings/doctor/5/
+
+
+### get rating by doctor  will be end point related to the doctor
+GET http://127.0.0.1:8000/ratings/doctor/16/
