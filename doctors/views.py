@@ -11,6 +11,8 @@ from .pagination import CustomPagination
 
 
 @api_view(['GET'])
+# @authentication_classes([SessionAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def get_doctors(request):
     if request.method == 'GET':
         search_query = request.query_params.get('q', '')
