@@ -98,7 +98,7 @@ GET http://127.0.0.1:8000/auth/patients/
 
 
 ### get all doctors needed
-GET http://127.0.0.1:8000/doctors/doctors/
+GET http://127.0.0.1:8000/doctors/doctors?p=1&page_size=3
 
 ### get patient by id
 GET http://127.0.0.1:8000/auth/users/10/
