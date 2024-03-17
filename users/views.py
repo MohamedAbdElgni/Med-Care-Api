@@ -67,8 +67,8 @@ def logout_user(request):
         
 
 @api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def get_user(request, id):
     user = get_object_or_404(User, id=id)
     if request.method == 'GET':

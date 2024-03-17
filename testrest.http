@@ -113,15 +113,12 @@ DELETE http://127.0.0.1:8000/doctors/doctor/1/
 DELETE http://127.0.0.1:8000/auth/users/1/
 
 ### Update users main info by id
-PUT http://127.0.0.1:8000/auth/users/10/
+PUT http://127.0.0.1:8000/auth/users/2/
 Content-Type: application/json
 
 {
-    "username": "ali2020",
-    "first_name": "ali22020",
-    "last_name": "mostafa",
-    "email": "aliss2ss@example.com",
-    "last_name": "mostafa",
+    "email": "alisxxs2ss@example.com",
+    "phone": "01298557840"
 }
 
 ### Update doctor profile by id
