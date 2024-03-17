@@ -104,7 +104,7 @@ GET http://127.0.0.1:8000/doctors/doctors?p=1&page_size=3
 GET http://127.0.0.1:8000/auth/users/10/
 
 ### get doctor by id
-GET http://127.0.0.1:8000/doctors/doctor/1/
+GET http://127.0.0.1:8000/doctors/doctor/2/
 
 ### Delete doctor by id
 DELETE http://127.0.0.1:8000/doctors/doctor/1/
@@ -125,7 +125,7 @@ Content-Type: application/json
 }
 
 ### Update doctor profile by id
-PUT http://127.0.0.1:8000/doctors/doctor/1/
+PUT http://127.0.0.1:8000/doctors/doctor/2/
 Content-Type: application/json
 
 {
@@ -207,21 +207,20 @@ POST http://127.0.0.1:8000/ratings/
 Content-Type: application/json
 
 {
-    "doctor": 16,
-    "user": 6,
+    "doctor": 2,
+    "user": 1,
     "rating": 4,
-    "comment": "Great experience with the doctor!"
+    "comment": "Great231 expsderience with the doctor!"
 }
 ### update rating example
-PUT http://127.0.0.1:8000/ratings/2/
+PUT http://127.0.0.1:8000/ratings/1/
 Content-Type: application/json
 
 {
-    "doctor": 3,
-    "user": 6,
+    "doctor": 2,
+    "user": 1,
     "rating": 5,
-    "comment": "Greasst expe454rience with the doctor!",
-    "created_at": "2024-03-12T22:47:52.391623Z"
+    "comment": "Greassst expe454rience with the doctor!"
 }
 ### delete rating example
 DELETE http://127.0.0.1:8000/ratings/11/
@@ -229,4 +228,4 @@ DELETE http://127.0.0.1:8000/ratings/11/
 
 
 ### get rating by doctor  will be end point related to the doctor
-GET http://127.0.0.1:8000/ratings/doctor/16/
+GET http://127.0.0.1:8000/ratings/doctor/2/

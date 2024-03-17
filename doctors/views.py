@@ -11,8 +11,8 @@ from .pagination import CustomPagination
 
 
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def get_doctors(request):
     if request.method == 'GET':
         # doctors = Doctor.objects.all()
