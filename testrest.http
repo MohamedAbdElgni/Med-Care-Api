@@ -24,7 +24,7 @@ POST http://127.0.0.1:8000/auth/login/
 Content-Type: application/json
 
 {
-    "email": "ahmed2222@example.com",
+    "email": "doctor2222@example.com",
     "password": "123456"
 }
 ### test example
@@ -237,12 +237,12 @@ GET http://127.0.0.1:8000/appointments/all_app/doctor/2/
 GET http://127.0.0.1:8000/schedules/all_sch/doctor/2/
 
 ### post schedule for the doctor
-POST http://127.0.0.1:8000/schedules/all_sch/doctor/2/
+POST http://127.0.0.1:8000/schedules/all_sch/doctor/1/
 Content-Type: application/json
 
 {
-  "day":"friday",
-  "start_time":"10:00",
-  "end_time":"12:00",
+  "day":"monday",
+  "start_time":"11:00",
+  "end_time":"1:00",
   "is_active":false
 }
