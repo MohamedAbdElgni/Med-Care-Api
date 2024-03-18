@@ -235,3 +235,14 @@ GET http://127.0.0.1:8000/appointments/all_app/doctor/2/
 
 ###get schedules by doctore
 GET http://127.0.0.1:8000/schedules/all_sch/doctor/2/
+
+### post schedule for the doctor
+POST http://127.0.0.1:8000/schedules/all_sch/doctor/2/
+Content-Type: application/json
+
+{
+  "day":"friday",
+  "start_time":"10:00",
+  "end_time":"12:00",
+  "is_active":false
+}

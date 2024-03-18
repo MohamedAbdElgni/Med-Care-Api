@@ -94,15 +94,37 @@ def doctor_appointments(request, doctor_id):
         serializer = GetAppointmentSerializer(appointments, many=True)
         return Response(serializer.data)
     
-@api_view(['GET'])
+# @api_view(['GET'])
+# def doctor_schedules(request, doctor_id):
+#     """
+#     Get all appointment for a specific doctor
+#     with patient info in each appointment
+#     """
+#     schedules = Schedule.objects.filter(doctor=doctor_id)
+#     if not schedules:
+#         return Response({'message': 'No Schedules found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+#     else:
+#         serializer = ScheduleSerializer(schedules, many=True)
+#         return Response(serializer.data)
+
+@api_view(['GET', 'POST'])
 def doctor_schedules(request, doctor_id):
     """
-    Get all appointment for a specific doctor
-    with patient info in each appointment
+    Get all schedules for a specific doctor
+    or create a new schedule for the doctor
     """
-    schedules = Schedule.objects.filter(doctor=doctor_id)
-    if not schedules:
-        return Response({'message': 'No Schedules found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
-    else:
-        serializer = ScheduleSerializer(schedules, many=True)
-        return Response(serializer.data)
+    if request.method == 'GET':
+        schedules = Schedule.objects.filter(doctor=doctor_id)
+        if not schedules:
+            return Response({'message': 'No schedules found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            serializer = ScheduleSerializer(schedules, many=True)
+            return Response(serializer.data)
+    elif request.method == 'POST':
+        # Associate the doctor ID with the request data
+        request.data['doctor'] = doctor_id
+        serializer = ScheduleSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
