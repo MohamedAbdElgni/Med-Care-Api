@@ -20,7 +20,7 @@ PyJWT==2.8.0
 pytz==2024.1
 requests==2.31.0
 shortuuid==1.0.13
+six==1.16.0
 sqlparse==0.4.4
 urllib3==2.2.1
 validators==0.22.0
-six
