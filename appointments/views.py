@@ -18,6 +18,7 @@ def all_schedules(request):
         else:
             return Response({'message': 'No Schedules found'}, status=status.HTTP_404_NOT_FOUND)
     elif request.method == 'POST':
+        print(request.data)
         serializer = ScheduleSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -93,19 +94,22 @@ def doctor_appointments(request, doctor_id):
     else:
         serializer = GetAppointmentSerializer(appointments, many=True)
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+def user_appointments(request, user_id):
+    """
+    Get all appointment for a specific doctor
+    with patient info in each appointment
+    """
+    appointments = Appointment.objects.filter(user=user_id)
+    if not appointments:
+        return Response({'message': 'No Appointment found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        serializer = GetAppointmentForUserSerializer(appointments, many=True)
+        return Response(serializer.data)
     
-# @api_view(['GET'])
-# def doctor_schedules(request, doctor_id):
-#     """
-#     Get all appointment for a specific doctor
-#     with patient info in each appointment
-#     """
-#     schedules = Schedule.objects.filter(doctor=doctor_id)
-#     if not schedules:
-#         return Response({'message': 'No Schedules found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
-#     else:
-#         serializer = ScheduleSerializer(schedules, many=True)
-#         return Response(serializer.data)
+    
 
 @api_view(['GET', 'POST'])
 def doctor_schedules(request, doctor_id):
@@ -128,3 +132,4 @@ def doctor_schedules(request, doctor_id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
