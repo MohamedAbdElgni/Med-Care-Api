@@ -11,10 +11,16 @@ from .pagination import CustomPagination
 
 
 @api_view(['GET'])
+# @authentication_classes([SessionAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def get_doctors(request):
     if request.method == 'GET':
-        # doctors = Doctor.objects.all()
+        search_query = request.query_params.get('q', '')
         queryset = Doctor.objects.all().order_by('user__id')
+
+        if search_query:
+            queryset = queryset.filter(user__first_name__icontains=search_query)
+
         paginator = CustomPagination()
         result_page = paginator.paginate_queryset(queryset, request)
         serializer = DoctorSerializer(result_page, many=True)
