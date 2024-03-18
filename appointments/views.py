@@ -80,3 +80,25 @@ def appointment(request, a_id):
     elif request.method == 'DELETE':
         appointments.delete()
         return Response({'message': 'Appointment deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def doctor_appointments(request, doctor_id):
+    try:
+        # Retrieve the user with the specified ID
+        user = User.objects.get(id=doctor_id)
+        
+        # Check if the user is a doctor
+        if not user.is_doctor:
+            return Response({'message': 'The specified user is not a doctor'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Retrieve all ratings for the specified doctor
+        appointments = Appointment.objects.filter(doctor_id=doctor_id) 
+        
+        if not appointments.exists():
+            return Response({'message': 'No Appointments found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+        
+        if request.method == 'GET':
+            serializer = AppointmentSerializer(appointments, many=True)
+            return Response(serializer.data)
+    except User.DoesNotExist:
+        return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
