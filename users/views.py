@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
@@ -6,10 +7,44 @@ from .models import *
 from .serializers import *
 from rest_framework.authtoken.models import Token
 from rest_framework import status
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from doctors.models import *
-
-
+from.tokens import account_activation_token
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.mail import EmailMessage
+def activate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, f'Account activated successfully')
+        return redirect('login')
+    else:
+        messages.error(request, 'Invalid activation link')
+        
+    return redirect('Home')
+def activateEmail(request,user,email):
+    mail_subject="Activate your user account"
+    mail_msg = render_to_string('templeat_activate.html', {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http',
+    })
+    email=EmailMessage(mail_subject,mail_msg,to=[email])
+    if email.send(fail_silently=False):
+        messages.success(request, f'Account created successfully. Please check {email} to activate your account')
+    else:
+        messages.error(request, f'Failed to send activation email to {email}')
+    
 @api_view(['POST'])
 def register(request):
     if request.method == 'POST':
@@ -18,7 +53,9 @@ def register(request):
         print("-"*50)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
+            # User.is_active=False
             serializer.save()
+            # activateEmail(request, user,form.cleaned_data.get['email'])
             if request.data['is_doctor']:
                 doctor = Doctor(user=User.objects.filter(username=request.data['username']).first())
                 doctor.save()
@@ -35,6 +72,7 @@ def register(request):
 @api_view(['POST'])
 def login_user(request):
         user = get_object_or_404(User, email=request.data['email'])
+        user.is_active=False
         if not user.check_password(request.data['password']):
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
         token, created = Token.objects.get_or_create(user=user)
