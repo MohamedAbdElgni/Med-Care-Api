@@ -83,22 +83,26 @@ def appointment(request, a_id):
 
 @api_view(['GET'])
 def doctor_appointments(request, doctor_id):
-    try:
-        # Retrieve the user with the specified ID
-        user = User.objects.get(id=doctor_id)
-        
-        # Check if the user is a doctor
-        if not user.is_doctor:
-            return Response({'message': 'The specified user is not a doctor'}, status=status.HTTP_404_NOT_FOUND)
-        
-        # Retrieve all ratings for the specified doctor
-        appointments = Appointment.objects.filter(doctor_id=doctor_id) 
-        
-        if not appointments.exists():
-            return Response({'message': 'No Appointments found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
-        
-        if request.method == 'GET':
-            serializer = AppointmentSerializer(appointments, many=True)
-            return Response(serializer.data)
-    except User.DoesNotExist:
-        return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    """
+    Get all appointment for a specific doctor
+    with patient info in each appointment
+    """
+    appointments = Appointment.objects.filter(doctor=doctor_id)
+    if not appointments:
+        return Response({'message': 'No Appointment found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        serializer = GetAppointmentSerializer(appointments, many=True)
+        return Response(serializer.data)
+    
+@api_view(['GET'])
+def doctor_schedules(request, doctor_id):
+    """
+    Get all appointment for a specific doctor
+    with patient info in each appointment
+    """
+    schedules = Schedule.objects.filter(doctor=doctor_id)
+    if not schedules:
+        return Response({'message': 'No Schedules found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        serializer = ScheduleSerializer(schedules, many=True)
+        return Response(serializer.data)
