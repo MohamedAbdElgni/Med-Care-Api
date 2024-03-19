@@ -63,7 +63,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,9 +115,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'mahrew2019@gmail.com'
-EMAIL_HOST_PASSWORD = 'rvpadwadawdwaedtsfsxz'
-EMAIL_FROM = 'mahrew2019@gmail.com'
+EMAIL_HOST_USER = 'mohamed.a.abdelgani@gmail.com'
+EMAIL_HOST_PASSWORD = 'xbogpqncvqnmtcww'
+EMAIL_FROM = 'mohamed.a.abdelgani@gmail.com'
 PASSWORD_RESET_TIMEOUT=14400
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

@@ -24,14 +24,15 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        messages.success(request, f'Account activated successfully')
-        return redirect('login')
+        return redirect('http://localhost:3000')
     else:
-        messages.error(request, 'Invalid activation link')
-        
-    return redirect('Home')
+        print("Activation link is invalid!")
+        return Response({'error': 'Activation link is invalid!'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 def activateEmail(request,user,email):
     mail_subject="Activate your user account"
+    #print template dir
     mail_msg = render_to_string('templeat_activate.html', {
         'user': user.username,
         'domain': get_current_site(request).domain,
@@ -39,12 +40,11 @@ def activateEmail(request,user,email):
         'token': account_activation_token.make_token(user),
         'protocol': 'https' if request.is_secure() else 'http',
     })
-    email=EmailMessage(mail_subject,mail_msg,to=[email])
-    if email.send(fail_silently=False):
-        messages.success(request, f'Account created successfully. Please check {email} to activate your account')
-    else:
-        messages.error(request, f'Failed to send activation email to {email}')
-    
+    email = EmailMessage(
+        mail_subject, mail_msg, to=[email]
+    )
+    email.send()
+    return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
 @api_view(['POST'])
 def register(request):
     if request.method == 'POST':
@@ -53,33 +53,31 @@ def register(request):
         print("-"*50)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            # User.is_active=False
-            serializer.save()
-            # activateEmail(request, user,form.cleaned_data.get['email'])
+            user = serializer.save()
+            user.is_active = False
+            user.save()
             if request.data['is_doctor']:
                 doctor = Doctor(user=User.objects.filter(username=request.data['username']).first())
                 doctor.save()
-                token = Token.objects.create(user=doctor.user)
-                return Response({'token': token.key,'user': serializer.data})
-            else:
-                token = Token.objects.create(user=User.objects.filter(username=request.data['username']).first())
-                return Response({'token': token.key,'user': serializer.data})
+            activateEmail(request,user,request.data['email'])
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
-    
+
+
 
 
 @api_view(['POST'])
 def login_user(request):
         user = get_object_or_404(User, email=request.data['email'])
-        user.is_active=False
-        if not user.check_password(request.data['password']):
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
-        token, created = Token.objects.get_or_create(user=user)
-        serializer = UserSerializer(user)
-        return Response({'token': token.key, 'user': serializer.data})
-    
-
+        
+        if user.is_active:
+            if user.check_password(request.data['password']):
+                token, created = Token.objects.get_or_create(user=user)
+                serializer = UserSerializer(user)
+                return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)
+            return Response({'error': 'Invalid password'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'User is not active'}, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET'])
 # @authentication_classes([SessionAuthentication, TokenAuthentication])
 # @permission_classes([IsAuthenticated])
