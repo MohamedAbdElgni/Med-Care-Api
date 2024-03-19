@@ -1,0 +1,27 @@
+{% autoescape off %}
+<html lang="en">
+
+<head>
+      <title>Appointment Confirmation</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f7f7f7;">
+      <div style="background-color: dodgerblue; color: white; padding: 10px;">
+
+            <h1>MedCare Support Team</h1>
+      </div>
+      <div style="padding: 20px; text-align: center;">
+            <h3 style="margin: auto;">Hello {{ patient }},</h3>
+            <h5 style="margin: auto; padding-bottom: 20px;">Your appointment with {{ doctor }} is {{ is_accepted }}.</h5>
+                  <p style="margin: 0; text-align: center;">Appointment Details:</p>
+                  <p style="margin: 0; text-align: center;">Date: {{ appointment }}</p>
+                  <p style="margin: 0; text-align: center;">Start Time: {{ start_time }}</p>
+                  <p style="margin: 0; text-align: center;">End Time: {{ end_time }}</p>
+            <p style="margin: 0; padding-top: 20px;">Thank you for choosing MedCare.</p>
+      </div>
+      <div style="background-color: mediumseagreen; color: white; padding: 10px; text-align: center;">MedCare &copy;
+            2024</div>
+</body>
+
+</html>
+{% endautoescape %}

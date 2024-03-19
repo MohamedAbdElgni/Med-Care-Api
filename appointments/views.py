@@ -5,6 +5,9 @@ from .models import *
 from .serializer import *
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from users.models import User
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 # Create your views here.
 
 
@@ -132,4 +135,31 @@ def doctor_schedules(request, doctor_id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+def send_confirmation_email(request, appointment):
+    """
+    Send confirmation email to the patient
+    """
+    patient = User.objects.get(id=appointment.user)
+    doctor = User.objects.get(id=appointment.doctor)
+    schedule = Schedule.objects.get(id=appointment.schedule)
+    subject = 'Appointment Confirmation'
+    message = render_to_string('appointment_confirmation_email.html', {
+        'patient': patient.username,
+        'doctor': doctor.username,
+        'appointment': schedule.day,
+        'start_time': schedule.start_time,
+        'end_time': schedule.end_time,
+        'is_accepted': 'Accepted' if appointment.is_accepted else 'Pending',
+    })
+    
+    email = EmailMessage(
+        subject,
+        message,
+        to=[patient.email]
+    )
+    email.content_subtype = 'html'
+    email.send()
     
