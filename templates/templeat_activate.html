@@ -1,6 +1,29 @@
 {% autoescape off %}
-Hi {{ user.username }},
-Please click on the link below in order to activate your account:
-{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+<html lang="en">
 
+<head>
+      <title>Activate Your Account</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f7f7f7;">
+      <div style="background-color: dodgerblue; color: white; padding: 10px;">
+
+            <h1>MedCare Support Team</h1>
+      </div>
+      <div style="padding: 20px; text-align: center;">
+            <h3 style="margin: auto;">Hello {{ user.username }},</h3>
+            <h5 style="margin: auto; padding-bottom: 20px;">Thank you for signing up with MedCare. Please click the button below to activate your
+                  account.</h5>
+                  <p style="margin: 0; text-align: center;">
+                        <a href="{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}"
+                              style="display: inline-block; padding: 10px 20px; background-color: dodgerblue; color: white; text-decoration: none; border-radius: 5px;">Activate
+                              Your Account</a>
+                  </p>
+            <p style="margin: 0; padding-top: 20px;">If you did not sign up for MedCare, please ignore this email.</p>
+      </div>
+      <div style="background-color: mediumseagreen; color: white; padding: 10px; text-align: center;">MedCare &copy;
+            2024</div>
+</body>
+
+</html>
 {% endautoescape %}

@@ -24,10 +24,10 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return redirect('http://localhost:3000')
+        return redirect('http://localhost:3000/SignIn')
     else:
         print("Activation link is invalid!")
-        return Response({'error': 'Activation link is invalid!'}, status=status.HTTP_400_BAD_REQUEST)
+        return redirect('http://localhost:3000/SignIn')
 
 
 def activateEmail(request,user,email):
@@ -43,8 +43,10 @@ def activateEmail(request,user,email):
     email = EmailMessage(
         mail_subject, mail_msg, to=[email]
     )
+    email.content_subtype = "html"
     email.send()
     return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
+
 @api_view(['POST'])
 def register(request):
     if request.method == 'POST':
