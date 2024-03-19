@@ -23,6 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.address = validated_data.get('address', instance.address)
         instance.city = validated_data.get('city', instance.city)
         instance.gender = validated_data.get('gender', instance.gender)
+        instance.img = validated_data.get('img', instance.img)
         instance.save()
         
         return instance

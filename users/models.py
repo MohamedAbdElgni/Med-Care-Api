@@ -16,7 +16,7 @@ class User(AbstractUser):
     is_patient = models.BooleanField(default=False)
     is_doctor = models.BooleanField(default=False)
     phone = models.CharField(max_length=15, blank=True, null=True)
-    # yousef 3ayz yeshelha
+    img = models.ImageField(upload_to='profile_images/', null=True, blank=True, default='/profile.jpeg')
     age = models.IntegerField(blank=True, null=True)
     dob = models.DateField(blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
