@@ -45,6 +45,7 @@ def activateEmail(request,user,email):
     )
     email.content_subtype = "html"
     email.send()
+    print("Email sent successfully")
     return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
