@@ -174,8 +174,8 @@ Content-Type: application/json
 
 {
     "schedule":1,
-    "user":2,
-    "doctor":1
+    "user":1,
+    "doctor":2
     
 }
 
@@ -230,13 +230,13 @@ DELETE http://127.0.0.1:8000/ratings/11/
 GET http://127.0.0.1:8000/ratings/ratings/doctor/5/
 
 ### get appointment bg doctor
-GET http://127.0.0.1:8000/appointments/all_app/doctor/1/
+GET http://127.0.0.1:8000/appointments/all_app/doctor/4/?p=1&page_size=3
 
 ###get schedules by doctore
 GET http://127.0.0.1:8000/schedules/all_sch/doctor/1/
 
 ### post schedule for the doctor
-POST http://127.0.0.1:8000/schedules/all_sch/doctor/1/
+POST http://127.0.0.1:8000/schedules/all_sch/doctor/2/
 Content-Type: application/json
 
 {

@@ -5,6 +5,7 @@ from .models import *
 from .serializer import *
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from .pagination import CustomPagination
 # Create your views here.
 
 
@@ -88,13 +89,14 @@ def doctor_appointments(request, doctor_id):
     Get all appointment for a specific doctor
     with patient info in each appointment
     """
-    appointments = Appointment.objects.filter(doctor=doctor_id)
-    if not appointments:
+    queryset = Appointment.objects.filter(doctor=doctor_id).order_by('id')
+    if not queryset:
         return Response({'message': 'No Appointment found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
     else:
-        serializer = GetAppointmentSerializer(appointments, many=True)
-        return Response(serializer.data)
-
+        paginator = CustomPagination()
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = GetAppointmentSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
 @api_view(['GET'])
 def user_appointments(request, user_id):
