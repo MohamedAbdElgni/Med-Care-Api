@@ -4,11 +4,11 @@ POST http://127.0.0.1:8000/auth/register/
 Content-Type: application/json
 
 {
-    "username": "doctor2222",
+    "username": "ali",
     "password": "123456",
-    "first_name": "ali",
-    "last_name": "mostafa",
-    "email": "doctor2222@example.com",
+    "first_name": "Ali",
+    "last_name": "Mostafa",
+    "email": "ali@example.com",
     "is_patient": false,
     "is_doctor": true,
     "phone": "01098557840",
@@ -247,4 +247,4 @@ Content-Type: application/json
 }
 
 ### get app by user
-GET http://127.0.0.1:8000/appointments/all_app/user/2/
+GET http://127.0.0.1:8000/appointments/all_app/user/1/?p=1&page_size=3
