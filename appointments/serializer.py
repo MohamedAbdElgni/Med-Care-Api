@@ -25,7 +25,7 @@ class GetAppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
         fields = ['id','user','doctor', 'schedule', 'is_accepted', 'create_at']
-    def create(self, validated_data):
+    def create(self, validatpyed_data):
         return Appointment.objects.create(**validated_data)
     
 class GetAppointmentForUserSerializer(serializers.ModelSerializer):
