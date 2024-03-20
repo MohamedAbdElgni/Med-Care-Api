@@ -65,13 +65,14 @@ def all_appointments(request):
         serializer = AppointmentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            #send_confirmation_email(request, serializer.data)
+            send_confirmation_email(request, serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def appointment(request, a_id):
+    
     appointments = get_object_or_404(Appointment, pk=a_id)
     if request.method == 'GET':
         serializer = AppointmentSerializer(appointments)
@@ -79,9 +80,11 @@ def appointment(request, a_id):
 
     elif request.method == 'PUT':
         serializer = AppointmentSerializer(appointments, data=request.data)
+        
         if serializer.is_valid():
             serializer.save()
-            #send_confirmation_email(request, appointments)
+            print(serializer.data)
+            send_confirmation_email(request, serializer.data)
             return Response({'message': 'Appointment updated successfully', 'data': serializer.data})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -146,29 +149,29 @@ def doctor_schedules(request, doctor_id):
     
 
 
-# def send_confirmation_email(request, appointment):
-#     """
-#     Send confirmation email to the patient
-#     """
-#     print(appointment)
-#     patient = User.objects.get(id=appointment['user'])
-#     doctor = User.objects.get(id=appointment['doctor'])
-#     schedule = Schedule.objects.get(id=appointment['schedule'])
-#     subject = 'Appointment Confirmation'
-#     message = render_to_string('appointment_confirmation_email.html', {
-#         'patient': patient.username,
-#         'doctor': doctor.username,
-#         'appointment': schedule.day,
-#         'start_time': schedule.start_time,
-#         'end_time': schedule.end_time,
-#         'is_accepted': 'Accepted' if appointment['is_accepted'] else 'Pending'
-#     })
+def send_confirmation_email(request, appointment):
+    """
+    Send confirmation email to the patient
+    """
+    print(appointment)
+    patient = User.objects.get(id=appointment['user'])
+    doctor = User.objects.get(id=appointment['doctor'])
+    schedule = Schedule.objects.get(id=appointment['schedule'])
+    subject = 'Appointment Confirmation'
+    message = render_to_string('appointment_confirmation_email.html', {
+        'patient': patient.username,
+        'doctor': doctor.username,
+        'appointment': schedule.day,
+        'start_time': schedule.start_time,
+        'end_time': schedule.end_time,
+        'is_accepted': 'Accepted' if appointment['is_accepted'] else 'Pending'
+    })
     
-#     email = EmailMessage(
-#         subject,
-#         message,
-#         to=[patient.email]
-#     )
-#     email.content_subtype = 'html'
-#     email.send()
-#     return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
+    email = EmailMessage(
+        subject,
+        message,
+        to=[patient.email]
+    )
+    email.content_subtype = 'html'
+    email.send()
+    return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
