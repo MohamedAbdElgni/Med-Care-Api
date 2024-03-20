@@ -15,6 +15,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage
+from rest_framework.views import APIView
+from django.contrib.auth import get_user_model
 def activate(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
@@ -129,4 +131,24 @@ def get_user(request, id):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+class ChangePasswordView(APIView):
+    def patch(self, request, id):
+        User = get_user_model()  # Get the custom user model
+        try:
+            user = User.objects.get(id=id)
+            new_password = request.data.get('password')
+            
+            # Change the password
+            user.set_password(new_password)
+            user.save()
+            
+            return Response({'success': 'Password changed successfully'}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+ 
 
