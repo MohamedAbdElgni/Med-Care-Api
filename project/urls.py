@@ -21,7 +21,10 @@ from .views import *
 from .settings import *
 from django.conf import settings
 from django.conf.urls.static import static
-
+from contact.views import *
+from rest_framework.routers import DefaultRouter
+router = DefaultRouter()
+router.register(r'', ContactMessage,basename="api3")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', test_connection),
@@ -30,6 +33,12 @@ urlpatterns = [
     path('schedules/', include('appointments.urls')),
     path('ratings/', include('ratings.urls')),  
     path('doctors/', include('doctors.urls')),
+<<<<<<< HEAD
     path('offers/', include('offers.urls')),
+=======
+     path('contact',include(router.urls)),
+
+    # path('contact',ContactMessage.as_view(),name='contact'),
+>>>>>>> abedcc065f24fcfa3570f8925aa73aa80c942b4e
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

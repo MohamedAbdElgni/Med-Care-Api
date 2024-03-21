@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'ratings.apps.RatingsConfig',
     'appointments.apps.AppointmentsConfig',
     'doctors.apps.DoctorsConfig',
+<<<<<<< HEAD
     'offers.apps.OffersConfig'
+=======
+    'contact'
+>>>>>>> abedcc065f24fcfa3570f8925aa73aa80c942b4e
     
 ]
 

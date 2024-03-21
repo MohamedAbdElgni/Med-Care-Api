@@ -62,6 +62,7 @@ def all_appointments(request):
         else:
             return Response({'message': 'No Appointments found'}, status=status.HTTP_404_NOT_FOUND)
     elif request.method == 'POST':
+        print(request.data)
         serializer = AppointmentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

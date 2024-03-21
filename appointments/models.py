@@ -26,3 +26,8 @@ class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
     is_accepted = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, choices=[("pending", "Pending"), ("accepted", "Accepted"), ("rejected", "Rejected"), ("completed", "Completed")], default="pending")
+    payment_status = models.CharField(max_length=20, choices=[("pending", "Pending"), ("paid", "Paid"), ("failed", "Failed")], default="pending")
+    payment_method = models.CharField(max_length=50, blank=True, null=True)
+    payment_transaction_id = models.CharField(max_length=100, blank=True, null=True)
+    payment_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
