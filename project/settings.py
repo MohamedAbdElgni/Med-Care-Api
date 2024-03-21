@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'ratings.apps.RatingsConfig',
     'appointments.apps.AppointmentsConfig',
-    'doctors.apps.DoctorsConfig'
+    'doctors.apps.DoctorsConfig',
+    'offers.apps.OffersConfig'
     
 ]
 

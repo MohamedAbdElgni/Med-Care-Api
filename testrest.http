@@ -8,7 +8,7 @@ Content-Type: application/json
     "password": "123456",
     "first_name": "Ali",
     "last_name": "Mostafa",
-    "email": "ali@example.com",
+    "email": "israalotfy891@gmail.com",
     "is_patient": false,
     "is_doctor": true,
     "phone": "01098557840",
@@ -24,7 +24,7 @@ POST http://127.0.0.1:8000/auth/login/
 Content-Type: application/json
 
 {
-    "email": "doctor2222@example.com",
+    "email": "israalotfy891@gmail.com",
     "password": "123456"
 }
 ### test example
@@ -248,3 +248,26 @@ Content-Type: application/json
 
 ### get app by user
 GET http://127.0.0.1:8000/appointments/all_app/user/1/?p=1&page_size=3
+### get all offer
+GET http://127.0.0.1:8000/offers/doctors/
+###get offer by doctor id
+GET   http://127.0.0.1:8000/offers/doctors/1/
+
+### add offer
+POST  http://127.0.0.1:8000/offers/doctors/1/
+Content-Type: application/json
+
+{
+    "title": "New Offer Title",
+    "description": "This is a new offer description."
+}
+###edit offer
+DELETE  http://127.0.0.1:8000/offers/doctors/2/1/
+Content-Type: application/json
+
+{
+  "title": "Updated Offer Title",
+  "description": "Updated Offer Description"
+}
+
+
