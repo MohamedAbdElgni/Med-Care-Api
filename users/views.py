@@ -33,7 +33,7 @@ def activate(request, uidb64, token):
 
 
 def activateEmail(request,user,email):
-    mail_subject="Activate your user account"
+    mail_subject="Activate your MedCare account"
     #print template dir
     mail_msg = render_to_string('templeat_activate.html', {
         'user': user.username,

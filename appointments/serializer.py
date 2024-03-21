@@ -14,27 +14,25 @@ class ScheduleSerializer(serializers.ModelSerializer):
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
-        fields = ['id','doctor', 'schedule', 'user', 'create_at', 'is_accepted']
+        fields = ['id','doctor', 'schedule', 'user', 'create_at', 'is_accepted', 'status', 'payment_status', 'payment_method', 'payment_transaction_id', 'payment_amount']
 
 
 class GetAppointmentSerializer(serializers.ModelSerializer):
-    """
-    this to get the patent obj with each appointmetn
-    """
     user = UserSerializer()
+    
     class Meta:
         model = Appointment
-        fields = ['id','user','doctor', 'schedule', 'is_accepted', 'create_at']
-    def create(self, validatpyed_data):
+        fields = ['id','user','doctor', 'schedule', 'is_accepted', 'create_at', 'status', 'payment_status', 'payment_method', 'payment_transaction_id', 'payment_amount']
+
+    def create(self, validated_data):
         return Appointment.objects.create(**validated_data)
     
 class GetAppointmentForUserSerializer(serializers.ModelSerializer):
-    """
-    this to get the patent obj with each appointmetn
-    """
     doctor = DoctorSerializer()
+
     class Meta:
         model = Appointment
-        fields = ['id','user','doctor', 'schedule', 'is_accepted', 'create_at']
+        fields = ['id','user','doctor', 'schedule', 'is_accepted', 'create_at', 'status', 'payment_status', 'payment_method', 'payment_transaction_id', 'payment_amount']
+
     def create(self, validated_data):
         return Appointment.objects.create(**validated_data)
