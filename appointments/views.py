@@ -81,7 +81,7 @@ def appointment(request, a_id):
 
     elif request.method == 'PUT':
         serializer = AppointmentSerializer(appointments, data=request.data)
-        
+        print(request.data)
         if serializer.is_valid():
             serializer.save()
             print(serializer.data)
@@ -176,3 +176,22 @@ def send_confirmation_email(request, appointment):
     email.content_subtype = 'html'
     email.send()
     return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
+
+
+@api_view(['PUT'])  # Use PUT method for updating an existing resource
+def handle_payment(request, appointment_id):
+    try:
+        appointment = Appointment.objects.get(id=appointment_id)
+        print(appointment)
+        
+    except Appointment.DoesNotExist:
+        return Response({'message': 'Appointment not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = PaymentSerializer(appointment, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
