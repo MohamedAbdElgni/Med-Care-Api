@@ -4,5 +4,5 @@ from .models import Offer
 class OfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = Offer
-        fields = ['id', 'doctor', 'title', 'description', 'created_at']
+        fields = ['id', 'doctor', 'specialization', 'image_url', 'original_price', 'discount_price', 'created_at']
 

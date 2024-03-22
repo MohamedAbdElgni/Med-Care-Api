@@ -257,17 +257,24 @@ GET   http://127.0.0.1:8000/offers/doctors/1/
 POST  http://127.0.0.1:8000/offers/doctors/1/
 Content-Type: application/json
 
-{
-    "title": "New Offer Title",
-    "description": "This is a new offer description."
+ {
+  "specialization": "Cardiology",
+  "image_url": "offer_image.jpg",
+  "original_price": 150.00,
+  "discount_price": 120.00
 }
 ###edit offer
-DELETE  http://127.0.0.1:8000/offers/doctors/2/1/
+PUT http://127.0.0.1:8000/offers/doctors/1/2/
 Content-Type: application/json
 
-{
-  "title": "Updated Offer Title",
-  "description": "Updated Offer Description"
-}
+ {
+  "specialization": "uCardiology",
+  "image_url": "offer_image.jpg",
+  "original_price": 150.00,
+  "discount_price": 120.00
+ }
+
+DELETE  http://127.0.0.1:8000/offers/doctors/1/2/
+
 
 
