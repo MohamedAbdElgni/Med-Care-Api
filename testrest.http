@@ -264,12 +264,12 @@ Content-Type: application/json
   "discount_price": 120.00
 }
 ###edit offer
-PUT http://127.0.0.1:8000/offers/doctors/1/2/
+PUT http://127.0.0.1:8000/offers/doctors/1/3/
 Content-Type: application/json
 
  {
   "specialization": "uCardiology",
-  "image_url": "offer_image.jpg",
+  "image_url": "offer.jpg",
   "original_price": 150.00,
   "discount_price": 120.00
  }
