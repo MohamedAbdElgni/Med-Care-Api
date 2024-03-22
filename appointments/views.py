@@ -10,7 +10,11 @@ from users.models import User
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from .pagination import CustomPagination
+
+from .payhelpers import *
 # Create your views here.
+
+intgration_id = 3033362
 
 
 @api_view(['GET', 'POST'])
@@ -140,7 +144,6 @@ def doctor_schedules(request, doctor_id):
             serializer = ScheduleSerializer(schedules, many=True)
             return Response(serializer.data)
     elif request.method == 'POST':
-        # Associate the doctor ID with the request data
         request.data['doctor'] = doctor_id
         serializer = ScheduleSerializer(data=request.data)
         if serializer.is_valid():
@@ -178,16 +181,17 @@ def send_confirmation_email(request, appointment):
     return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
 
 
-@api_view(['PUT'])  # Use PUT method for updating an existing resource
+@api_view(['PUT']) 
 def handle_payment(request, appointment_id):
     try:
         appointment = Appointment.objects.get(id=appointment_id)
-        print(appointment)
+        
         
     except Appointment.DoesNotExist:
         return Response({'message': 'Appointment not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'PUT':
+        
         serializer = PaymentSerializer(appointment, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -195,3 +199,40 @@ def handle_payment(request, appointment_id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST', 'GET'])
+def get_iframe_url(request, appointment_id):
+    """
+    Handle the payment callback
+    """
+    print(appointment_id)
+    try:
+        appointment = Appointment.objects.get(id=appointment_id)
+        print(appointment)
+        
+    except Appointment.DoesNotExist:
+        return Response({'message': 'Appointment not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        iframe_url = payment_process(appointment.doctor.fees, appointment_id)
+        return Response({'iframe_url': iframe_url})
+    
+    return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+
+
+def payment_process(fees, appointment_id):
+    # first step
+    order_id_r, token_r = secound_step(token=first_step())
+    # third step
+    final_token = third_Step(intgration_id, order_id_r, token_r, amount=fees)
+    iframe_url = f"https://accept.paymob.com/api/acceptance/iframes/695481?payment_token={final_token}"
+    print(iframe_url)
+    return iframe_url
+
+
