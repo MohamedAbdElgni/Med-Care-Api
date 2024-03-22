@@ -33,12 +33,9 @@ urlpatterns = [
     path('schedules/', include('appointments.urls')),
     path('ratings/', include('ratings.urls')),  
     path('doctors/', include('doctors.urls')),
-<<<<<<< HEAD
     path('offers/', include('offers.urls')),
-=======
-     path('contact',include(router.urls)),
+    path('contact',include(router.urls)),
 
     # path('contact',ContactMessage.as_view(),name='contact'),
->>>>>>> abedcc065f24fcfa3570f8925aa73aa80c942b4e
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
