@@ -26,6 +26,8 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'', ContactMessage,basename="api3")
 urlpatterns = [
+    path('admin_tools_stats/', include('admin_tools_stats.urls')),
+    path ('grappelli/',include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('', test_connection),
     path('auth/', include('users.urls')),
