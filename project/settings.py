@@ -50,8 +50,8 @@ INSTALLED_APPS = [
     'ratings.apps.RatingsConfig',
     'appointments.apps.AppointmentsConfig',
     'doctors.apps.DoctorsConfig',
+    'offers.apps.OffersConfig',
     'contact'
-    
 ]
 
 MIDDLEWARE = [

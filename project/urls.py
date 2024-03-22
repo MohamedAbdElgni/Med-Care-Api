@@ -35,7 +35,8 @@ urlpatterns = [
     path('schedules/', include('appointments.urls')),
     path('ratings/', include('ratings.urls')),  
     path('doctors/', include('doctors.urls')),
-     path('contact',include(router.urls)),
+    path('offers/', include('offers.urls')),
+    path('contact',include(router.urls)),
 
     # path('contact',ContactMessage.as_view(),name='contact'),
     

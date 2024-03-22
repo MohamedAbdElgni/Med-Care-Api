@@ -8,7 +8,7 @@ Content-Type: application/json
     "password": "123456",
     "first_name": "Ali",
     "last_name": "Mostafa",
-    "email": "ali@example.com",
+    "email": "israalotfy891@gmail.com",
     "is_patient": false,
     "is_doctor": true,
     "phone": "01098557840",
@@ -24,7 +24,7 @@ POST http://127.0.0.1:8000/auth/login/
 Content-Type: application/json
 
 {
-    "email": "doctor2222@example.com",
+    "email": "israalotfy891@gmail.com",
     "password": "123456"
 }
 ### test example
@@ -248,3 +248,71 @@ Content-Type: application/json
 
 ### get app by user
 GET http://127.0.0.1:8000/appointments/all_app/user/1/?p=1&page_size=3
+
+
+############# paymob token
+POST https://accept.paymob.com/api/auth/tokens
+Content-Type: application/json
+
+{
+    "api_key": "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TmpFeU16ZzNMQ0p1WVcxbElqb2lhVzVwZEdsaGJDSjkuX3B5RFJhM05yUk5CbHRnVDVvM1huVjdQV2dxd2p1cXhlX1A0V3hJZVR1cXE2NFhBa1BRcHRIYVVmVHNRUHEybU93V1BMaXJOLWZIdnEzZWFudGtzTnc="
+}
+
+######### paymob payment key
+
+
+### paymob order token obtained from the previous step
+POST https://accept.paymob.com/api/ecommerce/orders
+Content-Type: application/json
+
+{
+    "auth_token": "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TmpFeU16ZzNMQ0p3YUdGemFDSTZJakZrWVRFMFl6RTFNMkl4WlRBd1l6VmpZelZoTUdOak1EUmhNbVEwWm1ObU5XTTJPV1l5WkRZeE1tRTBOMk5qT0dFMk56SmxNemcyTW1ObE1qWTNOVGtpTENKbGVIQWlPakUzTVRFd09ESXpPRE45LndDSHhJcnVZWFdEVG1CYkxEVWw1M1J2T3lYR2F0WTNGM09FeVVzSl9NMmJ0cDZLenFzcHRiZEl0cEJIVXZ3ZHBvOWR6SzNyaW83a3pNR0VpVzZwMjR3",
+    "currency": "EGP",
+    "amount_cents": 10000,
+    "items": [
+        {
+            "name": "item1",
+            "amount_cents": 10000,
+            "description": "item1 description",
+            "quantity": 1
+        }
+    ]
+    
+}
+
+### paymob payment key
+POST https://accept.paymob.com/api/acceptance/payment_keys
+Content-Type: application/json
+
+{
+    "auth_token": "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TmpFeU16ZzNMQ0p3YUdGemFDSTZJakZrWVRFMFl6RTFNMkl4WlRBd1l6VmpZelZoTUdOak1EUmhNbVEwWm1ObU5XTTJPV1l5WkRZeE1tRTBOMk5qT0dFMk56SmxNemcyTW1ObE1qWTNOVGtpTENKbGVIQWlPakUzTVRFd09ESXpPRE45LndDSHhJcnVZWFdEVG1CYkxEVWw1M1J2T3lYR2F0WTNGM09FeVVzSl9NMmJ0cDZLenFzcHRiZEl0cEJIVXZ3ZHBvOWR6SzNyaW83a3pNR0VpVzZwMjR3",
+    "amount_cents": 10000,
+    "order_id": 194967961,
+    "billing_data": {
+        "apartment": "803",
+        "email": "",
+        "floor": "42",
+    },
+    "currency": "EGP",
+    "lock_order_when_paid": "false",
+    "redirect": "http://www.example.com",
+    "shipping_data": {
+        "apartment": "803",
+        "email": "",
+        "floor": "42",
+    },
+    "billing_data": {
+        "apartment": "803",
+        "email": "",
+        "floor": "42",
+    },
+    "integration_id": 3033362,
+
+}
+
+
+#### Stripe payment
+POST https://api.stripe.com/v1/payment_intents
+
+Content-Type: application/x-www-form-urlencoded
+
