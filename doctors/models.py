@@ -8,7 +8,7 @@ class Doctor(models.Model):
     degree = models.CharField(max_length=100, blank=True, null=True)
     #experience = models.IntegerField(blank=True, null=True)
     area = models.CharField(max_length=100, blank=True, null=True)
-    fees = models.IntegerField(blank=True, null=True, default=0)
+    fees = models.IntegerField(blank=True, null=True, default=200)
     
     def __str__(self):
         return self.user.username
