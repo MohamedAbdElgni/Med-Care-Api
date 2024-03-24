@@ -75,7 +75,7 @@ def register(request):
 @api_view(['POST'])
 def login_user(request):
         user = get_object_or_404(User, email=request.data['email'])
-        
+        print("hi freom login")
         if user.is_active:
             if user.check_password(request.data['password']):
                 token, created = Token.objects.get_or_create(user=user)
