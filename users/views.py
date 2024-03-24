@@ -26,10 +26,10 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return redirect('https://localhost:3000/SignIn')
+        return redirect('https://127.0.0.1:3000/SignIn')
     else:
         print("Activation link is invalid!")
-        return redirect('https://localhost:3000/SignIn')
+        return redirect('https://127.0.0.1:3000/SignIn')
 
 
 def activateEmail(request,user,email):
