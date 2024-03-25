@@ -47,6 +47,8 @@ def activateEmail(request,user,email):
     )
     email.content_subtype = "html"
     email.send()
+    # print link
+    print(f"http://{get_current_site(request).domain}/auth/activate/{urlsafe_base64_encode(force_bytes(user.pk))}/{account_activation_token.make_token(user)}")
     print("Email sent successfully")
     return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
 
