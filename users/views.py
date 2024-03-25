@@ -75,7 +75,6 @@ def register(request):
 @api_view(['POST'])
 def login_user(request):
         user = get_object_or_404(User, email=request.data['email'])
-        print("hi freom login")
         if user.is_active:
             if user.check_password(request.data['password']):
                 token, created = Token.objects.get_or_create(user=user)
@@ -83,6 +82,7 @@ def login_user(request):
                 return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)
             return Response({'error': 'Invalid password'}, status=status.HTTP_400_BAD_REQUEST)
         return Response({'error': 'User is not active'}, status=status.HTTP_400_BAD_REQUEST)
+    
 @api_view(['GET'])
 # @authentication_classes([SessionAuthentication, TokenAuthentication])
 # @permission_classes([IsAuthenticated])
