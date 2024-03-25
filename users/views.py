@@ -26,10 +26,10 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return redirect('https://localhost:3000/SignIn')
+        return redirect('https://127.0.0.1:3000/SignIn')
     else:
         print("Activation link is invalid!")
-        return redirect('https://localhost:3000/SignIn')
+        return redirect('https://127.0.0.1:3000/SignIn')
 
 
 def activateEmail(request,user,email):
@@ -75,7 +75,6 @@ def register(request):
 @api_view(['POST'])
 def login_user(request):
         user = get_object_or_404(User, email=request.data['email'])
-        
         if user.is_active:
             if user.check_password(request.data['password']):
                 token, created = Token.objects.get_or_create(user=user)
@@ -83,6 +82,7 @@ def login_user(request):
                 return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)
             return Response({'error': 'Invalid password'}, status=status.HTTP_400_BAD_REQUEST)
         return Response({'error': 'User is not active'}, status=status.HTTP_400_BAD_REQUEST)
+    
 @api_view(['GET'])
 # @authentication_classes([SessionAuthentication, TokenAuthentication])
 # @permission_classes([IsAuthenticated])

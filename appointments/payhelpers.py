@@ -36,14 +36,11 @@ def first_step(api_key=API_KEY):
     
     data = {"api_key": api_key}
     headers = headers0
-    print("first step started".center(100, "*"))
     response = requests.post(
         "https://accept.paymob.com/api/auth/tokens", headers=headers, json=data
     )
     token = response.json().get("token")
     # debug
-    print("***First-step-token---> " + token)
-    print("first step finished".center(100, "*") + "\n")
     return token
 
 
@@ -65,22 +62,10 @@ def secound_step(token, headers=headers0, amount=amount):
     }
 
     headers = headers0
-    print("secound step started".center(100, "*"))
     request = requests.post(
         "https://accept.paymob.com/api/ecommerce/orders", headers=headers, json=data
     )
     response = request.json()
-
-    print_response(response, stage="Second Step")
-    print("2secound step finishd".center(100, "*"))
-    print(
-        "order id is: "
-        + str(response.get("id"))
-        + "\n"
-        + "token is: "
-        + str(token)
-        + "\n"
-    )
     return response.get("id"), token
 
 
@@ -122,8 +107,6 @@ def third_Step(integration_id, order_id, token, headers=headers0, amount=amount)
     )
 
     response = request.json()
-
-    print_response(response, stage="Third Step")
 
     return response.get("token")
 

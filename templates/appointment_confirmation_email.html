@@ -12,7 +12,9 @@
       </div>
       <div style="padding: 20px; text-align: center;">
             <h3 style="margin: auto;">Hello {{ patient }},</h3>
-            <h5 style="margin: auto; padding-bottom: 20px;">Your appointment with Dr {{ doctor }} is {{ is_accepted }}.</h5>
+            <h5 style="margin: auto; padding-bottom: 20px;">Your appointment with Dr {{ doctor }} is <span
+                        style="color: dodgerblue; font-weight: bold; text-transform: capitalize;">
+                        {{is_accepted}}.</span></h5>
                   <p style="margin: 0; text-align: center;">Appointment Details:</p>
                   <p style="margin: 0; text-align: center;">Date: {{ appointment }}</p>
                   <p style="margin: 0; text-align: center;">Start Time: {{ start_time }}</p>
