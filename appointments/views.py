@@ -27,7 +27,7 @@ def all_schedules(request):
         else:
             return Response({'message': 'No Schedules found'}, status=status.HTTP_404_NOT_FOUND)
     elif request.method == 'POST':
-        print(request.data)
+        
         serializer = ScheduleSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -66,7 +66,6 @@ def all_appointments(request):
         else:
             return Response({'message': 'No Appointments found'}, status=status.HTTP_404_NOT_FOUND)
     elif request.method == 'POST':
-        print(request.data)
         serializer = AppointmentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -80,12 +79,12 @@ def appointment(request, a_id):
     
     appointments = get_object_or_404(Appointment, pk=a_id)
     if request.method == 'GET':
-        serializer = AppointmentSerializer(appointments)
+        serializer = GetAppointmentSerializer(appointments)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = AppointmentSerializer(appointments, data=request.data)
-        print(request.data)
+        
+        serializer = AppointmentSerializer (appointments, data=request.data , partial=True)
         if serializer.is_valid():
             serializer.save()
             print(serializer.data)
@@ -159,6 +158,7 @@ def send_confirmation_email(request, appointment):
     """
     print(appointment)
     patient = User.objects.get(id=appointment['user'])
+    print(patient.email)
     doctor = User.objects.get(id=appointment['doctor'])
     schedule = Schedule.objects.get(id=appointment['schedule'])
     subject = 'Appointment Confirmation'
@@ -168,7 +168,8 @@ def send_confirmation_email(request, appointment):
         'appointment': schedule.day,
         'start_time': schedule.start_time,
         'end_time': schedule.end_time,
-        'is_accepted': 'Accepted' if appointment['is_accepted'] else 'Pending'
+        #'is_accepted': 'Accepted' if appointment['is_accepted']  else 'Pending'
+        'is_accepted': f"{appointment['status']}"
     })
     
     email = EmailMessage(
@@ -193,8 +194,11 @@ def handle_payment(request, appointment_id):
     if request.method == 'PUT':
         
         serializer = PaymentSerializer(appointment, data=request.data, partial=True)
+        
         if serializer.is_valid():
             serializer.save()
+            print(appointment)
+            print(serializer.data)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -227,12 +231,9 @@ def get_iframe_url(request, appointment_id):
 
 
 def payment_process(fees, appointment_id):
-    # first step
     order_id_r, token_r = secound_step(token=first_step())
-    # third step
     final_token = third_Step(intgration_id, order_id_r, token_r, amount=fees)
     iframe_url = f"https://accept.paymob.com/api/acceptance/iframes/695481?payment_token={final_token}"
-    print(iframe_url)
     return iframe_url
 
 
