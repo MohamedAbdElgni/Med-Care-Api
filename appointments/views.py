@@ -237,3 +237,5 @@ def payment_process(fees, appointment_id):
     return iframe_url
 
 
+def send_payment_invoice():
+    pass
