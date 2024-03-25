@@ -36,6 +36,8 @@ urlpatterns = [
     path('doctors/', include('doctors.urls')),
     path('offers/', include('offers.urls')),
     path('contact',include(router.urls)),
+    path('questions/', include('Question.urls')),  
+
 
     # path('contact',ContactMessage.as_view(),name='contact'),
     
