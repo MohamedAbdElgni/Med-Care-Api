@@ -12,14 +12,15 @@ class ScheduleSerializer(serializers.ModelSerializer):
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Appointment
         fields = ['id','doctor', 'schedule', 'user', 'create_at', 'is_accepted', 'status', 'payment_status', 'payment_method', 'payment_transaction_id', 'payment_amount']
-
+    
 
 class GetAppointmentSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    
+    schedule = ScheduleSerializer()
     class Meta:
         model = Appointment
         fields = ['id','user','doctor', 'schedule', 'is_accepted', 'create_at', 'status', 'payment_status', 'payment_method', 'payment_transaction_id', 'payment_amount']

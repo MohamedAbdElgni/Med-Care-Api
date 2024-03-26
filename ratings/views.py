@@ -5,6 +5,7 @@ from .models import *
 from .serializers import *
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from .pagination import CustomPagination
 
 #rating  
 @api_view(['GET', 'POST'])
@@ -53,10 +54,12 @@ def doctor_ratings(request, doctor_id):
     Get all ratings for a specific doctor
     with patient info in each rating
     """
-    ratings = Rating.objects.filter(doctor=doctor_id)
+    ratings = Rating.objects.filter(doctor=doctor_id).order_by('id')
     if not ratings:
         return Response({'message': 'No ratings found for this doctor'}, status=status.HTTP_404_NOT_FOUND)
-    else:
-        serializer = DoctorRatings(ratings, many=True)
-        return Response(serializer.data)
-    
+
+    paginator = CustomPagination()
+    paginated_ratings = paginator.paginate_queryset(ratings, request)
+    serializer = DoctorRatings(paginated_ratings, many=True)
+
+    return paginator.get_paginated_response(serializer.data)

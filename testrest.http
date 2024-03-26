@@ -227,7 +227,7 @@ DELETE http://127.0.0.1:8000/ratings/11/
 
 
 ### get rating by doctor
-GET http://127.0.0.1:8000/ratings/ratings/doctor/5/
+GET http://127.0.0.1:8000/ratings/doctor/2/?p=1&page_size=3
 
 ### get appointment bg doctor
 GET http://127.0.0.1:8000/appointments/all_app/doctor/4/?p=1&page_size=3
