@@ -36,7 +36,11 @@ def get_offers_by_doctor_id(request, doctor_id):
         serializer = OfferSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            # Fetch the created offer object
+            created_offer = Offer.objects.get(pk=serializer.data['id'])
+            # Update the serializer to include the doctor's name
+            serializer_with_doctor_name = OfferSerializer(created_offer)
+            return Response(serializer_with_doctor_name.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 @api_view(['PUT', 'DELETE'])
@@ -58,3 +62,4 @@ def update_delete_offer(request, doctor_id, offer_id):
         # Delete the offer
         offer.delete()
         return Response({'message': 'Offer deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
